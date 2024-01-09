@@ -1,3 +1,4 @@
-from sqlalchemy.ext.declarative import declarative_base
-Base = declarative_base()
+from .base import Base
+from src.models import User, Post, ReferralLink
+
 
