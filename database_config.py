@@ -14,14 +14,6 @@ SessionLocal = async_sessionmaker(autocommit=False, autoflush=False, bind=engine
 
 # Dependency
 
-async def get_db():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        await db.close()
 
 
 

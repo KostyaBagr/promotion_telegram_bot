@@ -7,6 +7,7 @@ class User(Base):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True, index=True)
+    telegram_id = Column(Integer, index=True, unique=True)
     name = Column(String, nullable=True)
     username = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)

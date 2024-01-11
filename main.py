@@ -1,17 +1,10 @@
 from bot_config import dp, Bot, TOKEN
-import logging
-import asyncio
-import sys
+
+from aiogram import executor
 
 from src.handlers.users import user_handlers
-from aiogram.enums import ParseMode
-
-async def main() -> None:
-    bot = Bot(TOKEN)
-
-    await dp.start_polling(bot)
+from src.handlers.posts import posts_handlers
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
-    asyncio.run(main())
+    executor.start_polling(dp, skip_updates=True)
