@@ -31,3 +31,26 @@ async def additional_posts():
     for id, post in enumerate(posts_list, start=1):
         posts_kb.insert(KeyboardButton(text=f"Презентация N - {id}", callback_data=f'additional_post_{post.id}'))
     return posts_kb
+
+
+async def admin_keyboard():
+    """Кнопки для админки """
+    admin_kb = ReplyKeyboardMarkup(resize_keyboard=True)
+    create_post = KeyboardButton(text='Создать презентацию')
+    create_additional_post = KeyboardButton(text='Создать дополнительный пост')
+    referral_links = KeyboardButton(text='Добавить реферальную ссылку')
+    contact_me = KeyboardButton(text='Добавить контакты для связи')
+
+    admin_kb.add(create_post, create_additional_post, referral_links, contact_me)
+    return admin_kb
+
+
+async def next_or_cancel_post():
+    """Кнопки отмены и далее"""
+    post_kb = ReplyKeyboardMarkup(resize_keyboard=True)
+    cancel = KeyboardButton(text="Отмена")
+    next= KeyboardButton(text='Следующи шаг')
+    post_kb.add(next, cancel)
+    return post_kb
+
+cancel_btn = ReplyKeyboardMarkup(resize_keyboard=True).add(KeyboardButton(text="Отмена"))

@@ -8,7 +8,7 @@ from src.handlers.users.crud import create_user, is_user, get_referral_links, ge
 load_dotenv()
 
 
-@dp.message_handler(commands=['start'])
+@dp.message_handler(commands=['start', 'menu'])
 async def command_start_handler(message: Message) -> None:
     """Ф-ция обрабатывает команду start и сохраняет пользователя в БД"""
     user = await is_user(telegram_id=message.from_user.id)
