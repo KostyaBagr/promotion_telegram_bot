@@ -49,7 +49,7 @@ async def next_or_cancel_post():
     """Кнопки отмены и далее"""
     post_kb = ReplyKeyboardMarkup(resize_keyboard=True)
     cancel = KeyboardButton(text="Отмена")
-    next= KeyboardButton(text='Следующи шаг')
+    next= KeyboardButton(text='Следующий шаг')
     post_kb.add(next, cancel)
     return post_kb
 

@@ -39,11 +39,14 @@ async def save_admin_post(state):
     """Ф-ция сохранет пост, который был добавлен в админке"""
     async with state.proxy() as data:
         async with AsyncSession(bind=engine) as session:
+
             db_post = Post(
                 name=data['name'],
                 text=data['text'],
-                file=data['file'],
-                audio=data['audio']
+                file=data.get("file", None),
+                audio=data.get("audio", None),
+
+
             )
             session.add(db_post)
             await session.commit()
