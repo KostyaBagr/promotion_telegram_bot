@@ -8,3 +8,9 @@ class FSMPost(StatesGroup):
     text = State()
     file = State()
     audio = State()
+
+
+class FSMAdditionalPost(StatesGroup):
+    """FSM для добавления дополнительных постов"""
+    text = State()
+    file = State()

@@ -1,4 +1,6 @@
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, func, BigInteger
+import enum
+
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, func, BigInteger, Enum
 from src.config.base import Base
 
 
@@ -18,7 +20,7 @@ class Post(Base):
     """Таблица хранит посты"""
     __tablename__ = 'posts'
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String(30))
     text = Column(Text, nullable=False)
     file = Column(String, nullable=True)
@@ -30,9 +32,10 @@ class AdditionalPost(Base):
     """Таблица хранит дополнительные посты"""
     __tablename__ = 'additional_posts'
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     text = Column(Text, nullable=True)
     file = Column(String, nullable=True)
+    file_type = Column(String, nullable=True)
     created_at = Column(DateTime, server_default=func.now())
 
 
