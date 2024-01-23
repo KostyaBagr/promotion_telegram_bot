@@ -1,4 +1,6 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton
+
+from src.handlers.admin.crud import is_admin, get_contacts
 from src.handlers.posts.crud import get_posts
 from src.models import Post, AdditionalPost
 
@@ -7,30 +9,35 @@ async def start_buttons():
     """Кнопки, которые показываются при команде start"""
     menu = ReplyKeyboardMarkup(resize_keyboard=True)
     presentations = KeyboardButton(text='Посмотреть презентации')
-    download = KeyboardButton(text='Скачать Gem4Me')
-    referral_link = KeyboardButton(text='Стать партнером (реферальная ссылка)')
+    download = KeyboardButton(text='Скачать')
+    referral_link = KeyboardButton(text='Стать партнером')
     admin_contact = KeyboardButton(text='Связаться с менеджером')
     additional_posts = KeyboardButton(text='Дополнительные статьи')
 
-    menu.add(presentations, download, admin_contact, referral_link, additional_posts)
+    menu.add(presentations, additional_posts, admin_contact, download, referral_link)
     return menu
 
 
-async def posts():
+async def posts(user_id):
     """Презентации"""
-    posts_kb = InlineKeyboardMarkup(row_width=3)
+    posts_kb = InlineKeyboardMarkup(row_width=2)
     posts_list = await get_posts(model=Post)
     for post in posts_list:
         posts_kb.insert(KeyboardButton(text=f"Презентация - {post.name}", callback_data=f'presentation_{post.id}'))
+        if await is_admin(user_id):
+            posts_kb.insert(KeyboardButton(text=f"Удалить: {post.name}", callback_data=f'delete_presentation_{post.id}'))
     return posts_kb
 
 
-async def additional_posts():
+async def additional_posts(user_id):
     """Дополнительный посты"""
-    posts_kb = InlineKeyboardMarkup(row_width=3)
+    posts_kb = InlineKeyboardMarkup(row_width=2)
     posts_list = await get_posts(model=AdditionalPost)
     for id, post in enumerate(posts_list, start=1):
-        posts_kb.insert(KeyboardButton(text=f"Презентация N - {id}", callback_data=f'additional_post_{post.id}'))
+        posts_kb.insert(KeyboardButton(text=f"Статья N - {id}", callback_data=f'additional_post_{post.id}'))
+        if await is_admin(user_id):
+            posts_kb.insert(KeyboardButton(text=f"Удалить статью N - {id}", callback_data=f'delete_additional_presentation_{post.id}'))
+
     return posts_kb
 
 
@@ -39,10 +46,13 @@ async def admin_keyboard():
     admin_kb = ReplyKeyboardMarkup(resize_keyboard=True)
     create_post = KeyboardButton(text='Создать презентацию')
     create_additional_post = KeyboardButton(text='Создать дополнительную статью')
-    referral_links = KeyboardButton(text='Добавить реферальную ссылку')
-    contact_me = KeyboardButton(text='Добавить контакты для связи')
+    if await get_contacts():
+        contact_me = KeyboardButton(text='Изменить контакты для связи')
 
-    admin_kb.add(create_post, create_additional_post, referral_links, contact_me)
+    else:
+        contact_me = KeyboardButton(text='Добавить контакты для связи')
+
+    admin_kb.add(create_post, create_additional_post, contact_me)
     return admin_kb
 
 

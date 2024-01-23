@@ -14,3 +14,13 @@ class FSMAdditionalPost(StatesGroup):
     """FSM для добавления дополнительных постов"""
     text = State()
     file = State()
+
+
+class FSMContactMe(StatesGroup):
+    """FSM для добавления контактов админа"""
+    text = State()
+
+
+class FSMUpdateContact(StatesGroup):
+    """FSM для изменения контактов админа"""
+    update_text = State()

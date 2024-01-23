@@ -1,6 +1,6 @@
 import enum
 
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, func, BigInteger, Enum
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, func, BigInteger, Enum, UniqueConstraint
 from src.config.base import Base
 
 
@@ -52,5 +52,9 @@ class ContactMe(Base):
 
     __tablename__ = 'contact_me'
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, default=1)
     text = Column(Text, nullable=False)
+
+    __table_args__ = (
+        UniqueConstraint('id'),
+    )

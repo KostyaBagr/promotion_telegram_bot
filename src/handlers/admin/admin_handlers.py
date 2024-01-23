@@ -2,8 +2,8 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import Message
 from dotenv import load_dotenv
 from bot_config import dp, bot
-from src.handlers.admin.states import FSMPost, FSMAdditionalPost
-from .crud import is_admin, save_admin_post
+from src.handlers.admin.states import FSMPost, FSMAdditionalPost, FSMContactMe, FSMUpdateContact
+from .crud import is_admin, save_admin_post, create_contacts, update_contacts
 from aiogram import filters
 from src import keyboard as kb
 from ...models import Post, AdditionalPost
@@ -172,3 +172,50 @@ async def next_step_file(message: Message, state: FSMContext):
         await state.finish()
         await message.reply("Спасибо, вы успешно создали новую статью",
                             reply_markup=await kb.admin_keyboard())
+
+
+# -------Contacts------_#
+
+
+@dp.message_handler(text='Изменить контакты для связи', state=None)
+async def update_admin_contacts(message: Message):
+    if await is_admin(message.from_user.id):
+        await FSMUpdateContact.update_text.set()
+        await message.reply("Напишите текст, который будет содержать обновленные контакты\n\n"
+                            "Пример:\n"
+                            "tg - @new_username\n"
+                            "youtube - @new_username\n"
+                            "и т.д.", reply_markup=kb.cancel_btn)
+
+
+@dp.message_handler(content_types=['text'], state=FSMUpdateContact.update_text)
+async def update_contact_text(message: Message, state: FSMContext):
+    """Ф-ция обновляет текст с контактами"""
+    if await is_admin(message.from_user.id):
+        async with state.proxy() as data:
+            data['update_text'] = message.text
+        await update_contacts(message.text)
+        await state.finish()
+        await message.reply('Контакты обновлены!')
+
+
+@dp.message_handler(text='Добавить контакты для связи', state=None)
+async def add_admin_contacts(message: Message):
+    if await is_admin(message.from_user.id):
+        await FSMContactMe.text.set()
+        await message.reply("Напишите текст, который будет содержать ваши контакты\n\n"
+                            "Пример:\n"
+                            "tg - @username\n"
+                            "youtube - @username\n"
+                            "и т.д.", reply_markup=kb.cancel_btn)
+
+
+@dp.message_handler(content_types=['text'], state=FSMContactMe.text)
+async def add_contact_text(message: Message, state: FSMContext):
+    """Ф-ция сохраняет текст с контактами"""
+    if await is_admin(message.from_user.id):
+        async with state.proxy() as data:
+            data['text'] = message.text
+        await create_contacts(message.text)
+        await state.finish()
+        await message.reply('Контакт добавлен!')

@@ -32,5 +32,5 @@ async def get_referral_links():
 async def get_contacts():
     """Получение контактов админа"""
     async with AsyncSession(bind=engine) as session:
-        links = await session.execute(select(ContactMe))
-        return links.scalars().all()
+        contacts = await session.execute(select(ContactMe))
+        return contacts.scalars().first()

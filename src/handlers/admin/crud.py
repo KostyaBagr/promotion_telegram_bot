@@ -7,8 +7,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.testing import db
 from typing import Union
 from database_config import engine
-from src.models import User, Post, AdditionalPost
-
+from src.handlers.users.crud import get_contacts
+from src.models import User, Post, AdditionalPost, ContactMe
+from sqlalchemy import update
 load_dotenv()
 
 
@@ -59,3 +60,31 @@ async def save_admin_post(state: FSMContext, model: Union[Post, AdditionalPost])
             return db_post
 
 
+async def create_contacts(text):
+    """Ф-ция создает объект контактов админа"""
+    async with AsyncSession(bind=engine) as session:
+        contact = ContactMe(
+            text=text
+        )
+        session.add(contact)
+        await session.commit()
+        await session.refresh(contact)
+
+
+# async def get_contacts():
+#     """Ф-ция получает контакты"""
+#     async with AsyncSession(bind=engine) as session:
+#         contacts = await session.execute(select(ContactMe))
+#         return contacts.scalars().all()
+
+async def update_contacts(new_text):
+    """Ф-ция обновляет контакты"""
+
+    async with AsyncSession(bind=engine) as session:
+        contacts = await session.execute(select(ContactMe))
+        contact = contacts.scalars().first()
+        print(contact.text)
+        if contact:
+            contact.text = new_text
+            print(contact.text)
+            await session.commit()
