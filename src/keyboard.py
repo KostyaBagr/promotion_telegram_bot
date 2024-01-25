@@ -9,7 +9,7 @@ async def start_buttons():
     """Кнопки, которые показываются при команде start"""
     menu = ReplyKeyboardMarkup(resize_keyboard=True)
     presentations = KeyboardButton(text='Презентации')
-    download = KeyboardButton(text='Скачать ⬇🔄')
+    download = KeyboardButton(text='Скачать ⬇')
     referral_link = KeyboardButton(text='Стать партнером')
     admin_contact = KeyboardButton(text='Задать вопрос')
     additional_posts = KeyboardButton(text='Это интересно')
