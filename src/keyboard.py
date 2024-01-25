@@ -8,13 +8,13 @@ from src.models import Post, AdditionalPost
 async def start_buttons():
     """Кнопки, которые показываются при команде start"""
     menu = ReplyKeyboardMarkup(resize_keyboard=True)
-    presentations = KeyboardButton(text='Посмотреть презентации')
-    download = KeyboardButton(text='Скачать')
+    presentations = KeyboardButton(text='Презентации')
+    download = KeyboardButton(text='Скачать ⬇🔄')
     referral_link = KeyboardButton(text='Стать партнером')
-    admin_contact = KeyboardButton(text='Связаться с менеджером')
-    additional_posts = KeyboardButton(text='Дополнительные статьи')
+    admin_contact = KeyboardButton(text='Задать вопрос')
+    additional_posts = KeyboardButton(text='Это интересно')
 
-    menu.add(presentations, additional_posts, admin_contact, download, referral_link)
+    menu.add(presentations, download,referral_link, admin_contact, additional_posts)
     return menu
 
 

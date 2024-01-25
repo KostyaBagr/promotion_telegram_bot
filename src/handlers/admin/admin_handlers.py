@@ -207,7 +207,7 @@ async def add_admin_contacts(message: Message):
                             "Пример:\n"
                             "tg - @username\n"
                             "youtube - @username\n"
-                            "и т.д.", reply_markup=kb.cancel_btn)
+                            "и т.д.")
 
 
 @dp.message_handler(content_types=['text'], state=FSMContactMe.text)

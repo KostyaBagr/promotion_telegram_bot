@@ -1,7 +1,6 @@
 from aiogram.types import Message, CallbackQuery, InputFile
 from bot_config import bot, dp
 from dotenv import load_dotenv
-from aiogram.dispatcher import filters
 from src.handlers.posts.crud import get_posts, get_post, delete_post
 from src import keyboard as kb
 from src.models import Post, AdditionalPost
@@ -9,7 +8,7 @@ from src.models import Post, AdditionalPost
 load_dotenv()
 
 
-@dp.message_handler(filters.Text('Посмотреть презентации') | filters.Command('презентации'))
+@dp.message_handler(text="Презентации")
 async def presentation_button(message: Message):
     """Функция показывает список презентаций"""
     posts = await get_posts(Post)
@@ -48,7 +47,7 @@ async def delete_post_by_id(call: CallbackQuery):
         await bot.send_message(call.from_user.id, "К сожалению не удается удилить пост, попробуйте еще раз")
 
 
-@dp.message_handler(text='Дополнительные статьи')
+@dp.message_handler(text='Это интересно')
 async def additional_posts(message: Message):
     """Ф-ция обрабатывает получение дополнительных постов"""
     posts = await get_posts(AdditionalPost)

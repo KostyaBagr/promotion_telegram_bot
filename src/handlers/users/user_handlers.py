@@ -30,7 +30,7 @@ async def command_start_handler(message: Message):
                            reply_markup=await kb.start_buttons())
 
 
-@dp.message_handler(text='Скачать Gem4Me')
+@dp.message_handler(text='Скачать ⬇🔄')
 async def download_gem4me(message: Message):
     """Ф-ция обрабатывает кнопку Скачать Gem4Me"""
     await bot.send_message(message.from_user.id,
@@ -47,7 +47,7 @@ async def referral_link(message: Message):
                            parse_mode=ParseMode.HTML, disable_web_page_preview=True)
 
 
-@dp.message_handler(text='Связаться с менеджером')
+@dp.message_handler(text='Задать вопрос')
 async def contact_admin(message: Message):
     """Ф-ция обрабатывает кнопку 'Стать партнером' и присылает реферальные ссылки"""
 
