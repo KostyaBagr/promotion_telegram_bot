@@ -30,7 +30,7 @@ async def command_start_handler(message: Message):
                            reply_markup=await kb.start_buttons())
 
 
-@dp.message_handler(text='Скачать ⬇🔄')
+@dp.message_handler(text='Скачать ⬇')
 async def download_gem4me(message: Message):
     """Ф-ция обрабатывает кнопку Скачать Gem4Me"""
     await bot.send_message(message.from_user.id,
