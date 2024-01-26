@@ -47,7 +47,7 @@ async def delete_post_by_id(call: CallbackQuery):
         await bot.send_message(call.from_user.id, "К сожалению не удается удилить пост, попробуйте еще раз")
 
 
-@dp.message_handler(text='Это интересно')
+@dp.message_handler(text='Особое мнение')
 async def additional_posts(message: Message):
     """Ф-ция обрабатывает получение дополнительных постов"""
     posts = await get_posts(AdditionalPost)

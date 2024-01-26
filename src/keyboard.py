@@ -8,11 +8,11 @@ from src.models import Post, AdditionalPost
 async def start_buttons():
     """Кнопки, которые показываются при команде start"""
     menu = ReplyKeyboardMarkup(resize_keyboard=True)
-    presentations = KeyboardButton(text='Презентации')
-    download = KeyboardButton(text='Скачать ⬇')
-    referral_link = KeyboardButton(text='Стать партнером')
-    admin_contact = KeyboardButton(text='Задать вопрос')
-    additional_posts = KeyboardButton(text='Это интересно')
+    presentations = KeyboardButton(text='Презентации', width=3)
+    download = KeyboardButton(text='Скачать ⬇', width=3)
+    referral_link = KeyboardButton(text='Стать партнером', width=3)
+    admin_contact = KeyboardButton(text='Задать вопрос', width=3)
+    additional_posts = KeyboardButton(text='Особое мнение', width=3)
 
     menu.add(presentations, download,referral_link, admin_contact, additional_posts)
     return menu
@@ -44,13 +44,13 @@ async def additional_posts(user_id):
 async def admin_keyboard():
     """Кнопки для админки """
     admin_kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    create_post = KeyboardButton(text='Создать презентацию')
-    create_additional_post = KeyboardButton(text='Создать дополнительную статью')
+    create_post = KeyboardButton(text='Создать презентацию', width=3)
+    create_additional_post = KeyboardButton(text='Создать дополнительную статью', width=3)
     if await get_contacts():
-        contact_me = KeyboardButton(text='Изменить контакты для связи')
+        contact_me = KeyboardButton(text='Изменить контакты для связи', width=3)
 
     else:
-        contact_me = KeyboardButton(text='Добавить контакты для связи')
+        contact_me = KeyboardButton(text='Добавить контакты для связи', width=3)
 
     admin_kb.add(create_post, create_additional_post, contact_me)
     return admin_kb
