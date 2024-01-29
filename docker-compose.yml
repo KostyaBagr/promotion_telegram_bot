@@ -1,6 +1,5 @@
 version: '3.11'
 
-
 services:
 
 
@@ -17,13 +16,9 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
-
-
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
     restart: on-failure
-    ports:
-      - "5432:5432"
-
+ 
   bot:
     build:
       context: .
@@ -36,7 +31,8 @@ services:
     depends_on:
       - db
       - redis
-
+       
+   
 
 volumes:
   pgdata:

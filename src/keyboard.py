@@ -7,13 +7,13 @@ from src.models import Post, AdditionalPost
 
 async def start_buttons():
     """Кнопки, которые показываются при команде start"""
-    menu = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-    presentations = KeyboardButton(text='Презентации фцвфцвфцвфцвфвфцв',  width=3)
-    download = KeyboardButton(text='Скачать ⬇',  width=3)
-    referral_link = KeyboardButton(text='Стать партнером',  width=3)
-    admin_contact = KeyboardButton(text='Задать вопрос',  width=3)
-    additional_posts = KeyboardButton(text='Особое мнение',  width=3)
 
+    menu = ReplyKeyboardMarkup(resize_keyboard=True)
+    presentations = KeyboardButton(text='Презентации', width=3)
+    download = KeyboardButton(text='Скачать ⬇', width=3)
+    referral_link = KeyboardButton(text='Стать партнером', width=3)
+    admin_contact = KeyboardButton(text='Связаться с менеджером', width=3)
+    additional_posts = KeyboardButton(text='Особое мнение', width=3)
     menu.add(presentations, download,referral_link, admin_contact, additional_posts)
     return menu
 
@@ -23,7 +23,7 @@ async def posts(user_id):
     posts_kb = InlineKeyboardMarkup(row_width=2)
     posts_list = await get_posts(model=Post)
     for post in posts_list:
-        posts_kb.insert(KeyboardButton(text=f"Презентация - {post.name}", callback_data=f'presentation_{post.id}'))
+        posts_kb.insert(KeyboardButton(text=str(post.name), callback_data=f'presentation_{post.id}'))
         if await is_admin(user_id):
             posts_kb.insert(KeyboardButton(text=f"Удалить: {post.name}", callback_data=f'delete_presentation_{post.id}'))
     return posts_kb
@@ -44,13 +44,13 @@ async def additional_posts(user_id):
 async def admin_keyboard():
     """Кнопки для админки """
     admin_kb = ReplyKeyboardMarkup(resize_keyboard=True)
-    create_post = KeyboardButton(text='Создать презентацию')
-    create_additional_post = KeyboardButton(text='Создать дополнительную статью')
+    create_post = KeyboardButton(text='Создать презентацию', width=3)
+    create_additional_post = KeyboardButton(text='Создать дополнительную статью', width=3)
     if await get_contacts():
-        contact_me = KeyboardButton(text='Изменить контакты для связи')
+        contact_me = KeyboardButton(text='Изменить контакты для связи', width=3)
 
     else:
-        contact_me = KeyboardButton(text='Добавить контакты для связи')
+        contact_me = KeyboardButton(text='Добавить контакты для связи', width=3)
 
     admin_kb.add(create_post, create_additional_post, contact_me)
     return admin_kb

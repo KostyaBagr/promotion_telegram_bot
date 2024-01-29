@@ -33,13 +33,13 @@ async def command_start_handler(message: Message):
 @dp.message_handler(text='Скачать ⬇')
 async def download_gem4me(message: Message):
     """Ф-ция обрабатывает кнопку Скачать Gem4Me"""
+
     await bot.send_message(message.from_user.id,
                            "Наша маркетинговая команда в 2023 году полностью изменила лицо проекта.\n"
                            "Провела полный ребрендинг приложения Gem Space.\n\n"
-                           "Переходи по ссылке, скачай  Gem Space - открывай новое\n\n"
+                           "Переходи по ссылке, скачай Gem Space - открывай новое!\n\n"
                            "gemspace.com \n"
-                           "〰️〰️〰️〰️〰️〰️",
-                           disable_web_page_preview=True)
+                           "〰️〰️〰️〰️〰️〰️", disable_web_page_preview=True)
 
 
 @dp.message_handler(text='Стать партнером')
@@ -47,11 +47,12 @@ async def referral_link(message: Message):
     """Ф-ция обрабатывает кнопку 'Стать партнером' и присылает реферальные ссылки"""
 
     await bot.send_message(message.from_user.id,
-                           f'Реферальная ссылка - <a href="http://bc.gem4me.com/session/signup?sponsor=cuchum">перейти</a>',
+                           f'Чтобы приобрести доли в проекте Gem Space, нужно зарегистрироваться в  ✅ <a href="http://bc.gem4me.com/session/signup?sponsor=cuchum">Business Center (Кабинет акционера)</a>,–\n'
+                            'После регистрации тебе станут доступны все функции для инвестирования, приобретения долей, а так же для заработка и развития. Готов присоединиться к проекту будущего?',
                            parse_mode=ParseMode.HTML, disable_web_page_preview=True)
 
 
-@dp.message_handler(text='Задать вопрос')
+@dp.message_handler(text='Связаться с менеджером')
 async def contact_admin(message: Message):
     """Ф-ция обрабатывает кнопку 'Стать партнером' и присылает реферальные ссылки"""
 
@@ -61,6 +62,3 @@ async def contact_admin(message: Message):
                                disable_web_page_preview=True)
     else:
         await bot.send_message(message.from_user.id, "К сожалению контактов для связи нет")
-
-
-
